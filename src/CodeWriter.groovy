@@ -39,6 +39,7 @@ class CodeWriter {
                 return "ERROR"
         }
     }
+
 //    void writeInit(){
 //        write("@256")
 //        write("D=A")

@@ -7,10 +7,10 @@ class Parser {
 
     Parser(String vm){
         Matcher comments = vm =~ /\/\/.*/
-        while (comments.find()){
-            //remoção de comentários
-            vm = vm.replace(comments.group(),"")
+        while (comments.find()) {
+            vm = vm.minus(comments.group())
         }
+
         Matcher tks = vm =~ /[a-zA-Z][_a-zA-Z-|\/.|\/-|0-9]*|0|[1-9][0-9]*/
         while (tks.find()){
             //obtenção dos tokens

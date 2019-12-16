@@ -44,6 +44,12 @@ class Translator {
         if(p.size() > 1){
             write.writeInit()
         }
+        else{
+            String f = fileName[0]
+            if(f.contains("Sys.vm")){
+                write.writeInit()
+            }
+        }
         for(parser in p) {
             write.setFileName(fileName[i])
             while (parser.hasMoreComands()) {
@@ -75,6 +81,7 @@ class Translator {
                         parser.advance()
                         String name = parser.token
                         parser.advance()
+
                         write.writeFunction(name,parser.token)
                         break
                     case "call":

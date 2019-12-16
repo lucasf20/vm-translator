@@ -1,6 +1,6 @@
 class Translator {
-    static p = []
     static fileName = []
+    static cods = []
     static outputFileName = ""
 
     static void main(String[] args){
@@ -14,10 +14,11 @@ class Translator {
                 }
             }
             for (def s : vmfiles) {
-                p.add(new Parser(s))
+                cods.add(s)
             }
         }catch (Exception e){
-            p.add(new Parser(new String(dh.getBytes())))
+            cods.add(new String(dh.getBytes()))
+            //p.add(new Parser(new String(dh.getBytes())))
             fileName.add(dh.toString())
         }
         resolveOutputFile(args[0])
@@ -40,8 +41,13 @@ class Translator {
 
     static void getComands(){
         int i = 0
+        def tks = []
+        for(c in cods){
+            Parser p = new Parser(c)
+            tks.add(p.tokens)
+        }
         CodeWriter write = new CodeWriter()
-        if(p.size() > 1){
+        if(cods.size() > 1){
             write.writeInit()
         }
         else{
@@ -50,81 +56,79 @@ class Translator {
                 write.writeInit()
             }
         }
-        for(parser in p) {
+        for(vm in tks){
             write.setFileName(fileName[i])
-            while (parser.hasMoreComands()) {
-                switch (parser.token) {
+            i++
+            for(int a = 0; a<vm.size(); a++){
+                switch (vm[a]){
                     case "return":
                         write.writeReturn()
                         break
                     case "label":
-                        parser.advance()
-                        write.writeLabel(parser.token)
+                        a++
+                        write.writeLabel(vm[a])
                         break
                     case "if-goto":
-                        parser.advance()
-                        write.writeIf(parser.token)
+                        a++
+                        write.writeIf(vm[a])
                         break
                     case "push":
-                        parser.advance()
-                        String segment = parser.token
-                        parser.advance()
-                        write.writePush(segment,parser.token)
+                        a++
+                        String segment = vm[a]
+                        a++
+                        write.writePush(segment,vm[a])
                         break
                     case "pop":
-                        parser.advance()
-                        String segment = parser.token
-                        parser.advance()
-                        write.writePop(segment,parser.token)
+                        a++
+                        String segment = vm[a]
+                        a++
+                        write.writePop(segment,vm[a])
                         break
                     case "function":
-                        parser.advance()
-                        String name = parser.token
-                        parser.advance()
-
-                        write.writeFunction(name,parser.token)
+                        a++
+                        String name = vm[a]
+                        a++
+                        write.writeFunction(name,vm[a])
                         break
                     case "call":
-                        parser.advance()
-                        String name = parser.token
-                        parser.advance()
-                        write.writeCall(name,parser.token)
+                        a++
+                        String name = vm[a]
+                        a++
+                        write.writeCall(name,vm[a])
                         break
                     case "goto":
-                        parser.advance()
-                        write.writeGoto(parser.token)
+                        a++
+                        write.writeGoto(vm[a])
                         break
                     case "add":
-                        write.writeArithmetic(parser.token)
+                        write.writeArithmetic(vm[a])
                         break
                     case"sub":
-                        write.writeArithmetic(parser.token)
+                        write.writeArithmetic(vm[a])
                         break
                     case"neg":
-                        write.writeArithmetic(parser.token)
+                        write.writeArithmetic(vm[a])
                         break
                     case "eq":
-                        write.writeArithmetic(parser.token)
+                        write.writeArithmetic(vm[a])
                         break
                     case "gt":
-                        write.writeArithmetic(parser.token)
+                        write.writeArithmetic(vm[a])
                         break
                     case"lt":
-                        write.writeArithmetic(parser.token)
+                        write.writeArithmetic(vm[a])
                         break
                     case "and":
-                        write.writeArithmetic(parser.token)
+                        write.writeArithmetic(vm[a])
                         break
                     case"or":
-                        write.writeArithmetic(parser.token)
+                        write.writeArithmetic(vm[a])
                         break
                     case "not":
-                        write.writeArithmetic(parser.token)
+                        write.writeArithmetic(vm[a])
                         break
                 }
-                parser.advance()
             }
-            i++
         }
         write.saveCode(outputFileName)
     }

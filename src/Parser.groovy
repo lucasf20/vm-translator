@@ -6,6 +6,10 @@ class Parser {
     int pos, posMax
 
     Parser(String vm){
+        tokens = []
+        token = ""
+        pos = 0
+        posMax = 0
         Matcher comments = vm =~ /\/\/.*/
         while (comments.find()) {
             vm = vm.minus(comments.group())

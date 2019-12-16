@@ -30,7 +30,7 @@ class CodeWriter {
             case "pointer":
                 return "R" + (3 + ind)
             case "static":
-                return funcName + "." + index
+                return moduleName + "." + index
             default:
                 return "ERROR"
         }

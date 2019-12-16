@@ -3,14 +3,10 @@ class CodeWriter {
     String moduleName, moduleName2
     int labelCount = 0
     int callCount = 0
-    int returnSubCount
     String funcName = ""
 
-    CodeWriter(String path){
-        setFileName(path)
+    CodeWriter(){
         code = ""
-        labelCount = 0
-        returnSubCount = 0
         funcName = ""
     }
 
@@ -40,177 +36,177 @@ class CodeWriter {
         }
     }
 
-//    void writeInit(){
-//        write("@256")
-//        write("D=A")
-//        write("@SP")
-//        write("M=D")
-//        writeCall("Sys.init", "0")
+    void writeInit(){
+        write("@256")
+        write("D=A")
+        write("@SP")
+        write("M=D")
+        writeCall("Sys.init", "0")
 //        writeSubroutineReturn()
 //        writeSubArithmeticLt()
 //        writeSubArithmeticGt()
 //        writeSubArithmeticEq()
-//    }
+    }
 
-//    void  writeSubroutineReturn(){
-//        write("(\$RETURN\$)")
-//        write("@R13")
-//        write("M=D")
-//
-//        write("@LCL")
-//        write("D=M")
-//
-//        write("@R13")
-//        write("M=D")
-//
-//        write("@5")
-//        write("A=D-A")
-//        write("D=M")
-//        write("@R14")
-//        write("M=D")
-//
-//        write("@SP")
-//        write("AM=M-1")
-//        write("D=M")
-//        write("@ARG")
-//        write("A=M")
-//        write("M=D")
-//
-//        write("D=A")
-//        write("@SP")
-//        write("M=D+1")
-//
-//        write("@R13")
-//        write("AM=M-1")
-//        write("D=M")
-//        write("@THAT")
-//        write("M=D")
-//
-//        write("@R13")
-//        write("AM=M-1")
-//        write("D=M")
-//        write("@THIS")
-//        write("M=D")
-//
-//        write("@R13")
-//        write("AM=M-1")
-//        write("D=M")
-//        write("@ARG")
-//        write("M=D")
-//
-//        write("@R13")
-//        write("AM=M-1")
-//        write("D=M")
-//        write("@LCL")
-//        write("M=D")
-//
-//        write("@R14")
-//        write("A=M")
-//        write("0;JMP")
-//
-//        write("@R13")
-//        write("0;JMP")
-//    }
-//
-//    void writeSubArithmeticGt(){
-//        write("(\$GT\$)")
-//        write("@R13")
-//        write("M=D")
-//
-//        String labelTrue, labelFalse
-//
-//        labelTrue = "JGT_TRUE_" + moduleName + "_" + labelCount
-//        labelFalse = "JGT_FALSE_" + moduleName + "_" + labelCount
-//
-//        write("@SP // gt")
-//        write("AM=M-1")
-//        write("D=M")
-//        write("@SP")
-//        write("AM=M-1")
-//        write("D=M-D")
-//        write("@" + labelTrue)
-//        write("D;JGT")
-//        write("D=0")
-//        write("@" + labelFalse)
-//        write("0;JMP")
-//        write("(" + labelTrue + ")")
-//        write("D=-1")
-//        write("(" + labelFalse + ")")
-//        write("@SP")
-//        write("A=M")
-//        write("M=D")
-//        write("@SP")
-//        write("M=M+1")
-//
-//        labelCount++
-//
-//        write("@R13")
-//        write("0;JMP")
-//    }
-//
-//    void writeSubArithmeticEq(){
-//        write("(\$EQ\$)")
-//        write("@R13")
-//        write("M=D")
-//
-//        String label  =  "JEQ_" + moduleName + "_" + labelCount
-//
-//        write("@SP // eq")
-//        write("AM=M-1")
-//        write("D=M")
-//        write("@SP")
-//        write("AM=M-1")
-//        write("D=M-D")
-//        write("@" + label)
-//        write("D;JEQ")
-//        write("D=1")
-//        write("(" + label + ")")
-//        write("D=D-1")
-//        write("@SP")
-//        write("A=M")
-//        write("M=D")
-//        write("@SP")
-//        write("M=M+1")
-//
-//        labelCount++
-//
-//        write("@R13")
-//        write("0;JMP")
-//    }
-//
-//    void writeSubArithmeticLt(){
-//        write("(\$LT\$)")
-//        write("@R13")
-//        write("M=D")
-//
-//        String labelTrue = "JLT_TRUE_"+ moduleName +"_"+labelCount
-//        String labelFalse = "JLT_FALSE_"+ moduleName +"_"+labelCount
-//
-//        write("@SP // lt")
-//        write("AM=M-1")
-//        write("D=M")
-//        write("@SP")
-//        write("AM=M-1")
-//        write("D=M-D")
-//        write("@" + labelTrue + "")
-//        write("D;JLT")
-//        write("D=0")
-//        write("@" + labelFalse + "")
-//        write("0;JMP")
-//        write("(" + labelTrue + ")")
-//        write("D=-1")
-//        write("(" + labelFalse + ")")
-//        write("@SP")
-//        write("A=M")
-//        write("M=D")
-//        write("@SP")
-//        write("M=M+1")
-//
-//        labelCount++
-//
-//        write("@R13")
-//        write("0;JMP")
-//    }
+    void  writeSubroutineReturn(){
+        write("(\$RETURN\$)")
+        write("@R13")
+        write("M=D")
+
+        write("@LCL")
+        write("D=M")
+
+        write("@R13")
+        write("M=D")
+
+        write("@5")
+        write("A=D-A")
+        write("D=M")
+        write("@R14")
+        write("M=D")
+
+        write("@SP")
+        write("AM=M-1")
+        write("D=M")
+        write("@ARG")
+        write("A=M")
+        write("M=D")
+
+        write("D=A")
+        write("@SP")
+        write("M=D+1")
+
+        write("@R13")
+        write("AM=M-1")
+        write("D=M")
+        write("@THAT")
+        write("M=D")
+
+        write("@R13")
+        write("AM=M-1")
+        write("D=M")
+        write("@THIS")
+        write("M=D")
+
+        write("@R13")
+        write("AM=M-1")
+        write("D=M")
+        write("@ARG")
+        write("M=D")
+
+        write("@R13")
+        write("AM=M-1")
+        write("D=M")
+        write("@LCL")
+        write("M=D")
+
+        write("@R14")
+        write("A=M")
+        write("0;JMP")
+
+        write("@R13")
+        write("0;JMP")
+    }
+
+    void writeSubArithmeticGt(){
+        write("(\$GT\$)")
+        write("@R13")
+        write("M=D")
+
+        String labelTrue, labelFalse
+
+        labelTrue = "JGT_TRUE_" + moduleName + "_" + labelCount
+        labelFalse = "JGT_FALSE_" + moduleName + "_" + labelCount
+
+        write("@SP // gt")
+        write("AM=M-1")
+        write("D=M")
+        write("@SP")
+        write("AM=M-1")
+        write("D=M-D")
+        write("@" + labelTrue)
+        write("D;JGT")
+        write("D=0")
+        write("@" + labelFalse)
+        write("0;JMP")
+        write("(" + labelTrue + ")")
+        write("D=-1")
+        write("(" + labelFalse + ")")
+        write("@SP")
+        write("A=M")
+        write("M=D")
+        write("@SP")
+        write("M=M+1")
+
+        labelCount++
+
+        write("@R13")
+        write("0;JMP")
+    }
+
+    void writeSubArithmeticEq(){
+        write("(\$EQ\$)")
+        write("@R13")
+        write("M=D")
+
+        String label  =  "JEQ_" + moduleName + "_" + labelCount
+
+        write("@SP // eq")
+        write("AM=M-1")
+        write("D=M")
+        write("@SP")
+        write("AM=M-1")
+        write("D=M-D")
+        write("@" + label)
+        write("D;JEQ")
+        write("D=1")
+        write("(" + label + ")")
+        write("D=D-1")
+        write("@SP")
+        write("A=M")
+        write("M=D")
+        write("@SP")
+        write("M=M+1")
+
+        labelCount++
+
+        write("@R13")
+        write("0;JMP")
+    }
+
+    void writeSubArithmeticLt(){
+        write("(\$LT\$)")
+        write("@R13")
+        write("M=D")
+
+        String labelTrue = "JLT_TRUE_"+ moduleName +"_"+labelCount
+        String labelFalse = "JLT_FALSE_"+ moduleName +"_"+labelCount
+
+        write("@SP // lt")
+        write("AM=M-1")
+        write("D=M")
+        write("@SP")
+        write("AM=M-1")
+        write("D=M-D")
+        write("@" + labelTrue + "")
+        write("D;JLT")
+        write("D=0")
+        write("@" + labelFalse + "")
+        write("0;JMP")
+        write("(" + labelTrue + ")")
+        write("D=-1")
+        write("(" + labelFalse + ")")
+        write("@SP")
+        write("A=M")
+        write("M=D")
+        write("@SP")
+        write("M=M+1")
+
+        labelCount++
+
+        write("@R13")
+        write("0;JMP")
+    }
 
     void setFileName(String path){
         moduleName2 = path.replace(".vm","")
@@ -548,118 +544,161 @@ class CodeWriter {
 
     }
 
-//    void writeLabel(String label ) {
-//        write("(" + label + ")")
-//    }
-//
-//    void writeGoto(String label) {
-//        write("@" + label)
-//        write("0;JMP")
-//    }
-//
-//    void writeIf(String label) {
-//        write("@SP")
-//        write("AM=M-1")
-//        write("D=M")
-//        write("M=0")
-//        write("@" + label)
-//        write("D;JNE")
-//
-//    }
-//
-//    void writeFunction(String funcName, String nLocals) {
-//
-//        String loopLabel = funcName + "_INIT_LOCALS_LOOP"
-//        String loopEndLabel = funcName + "_INIT_LOCALS_END"
-//
-//        this.funcName = funcName
-//
-//        write("(" + funcName + ")" + "// initialize local variables")
-//        write("@"+ nLocals)
-//        write("D=A")
-//        write("@R13") // temp
-//        write("M=D")
-//        write("(" + loopLabel + ")")
-//        write("@" + loopEndLabel)
-//        write("D;JEQ")
-//        write("@0")
-//        write("D=A")
-//        write("@SP")
-//        write("A=M")
-//        write("M=D")
-//        write("@SP")
-//        write("M=M+1")
-//        write("@R13")
-//        write("MD=M-1")
-//        write("@" + loopLabel)
-//        write("0;JMP")
-//        write("(" + loopEndLabel + ")")
-//
-//    }
-//
-//    void writeFramePush(String value) {
-//        write("@" + value)
-//        write("D=M")
-//        write("@SP")
-//        write("A=M")
-//        write("M=D")
-//        write("@SP")
-//        write("M=M+1")
-//    }
-//
-//    void writeCall(String funcName, String numArgs) {
-//
-//        String comment = "// call " + funcName +" "+ numArgs
-//
-//        String returnAddr = funcName + "_RETURN_"+ callCount
-//        callCount++
-//
-//        write("@"+ returnAddr +" "+ comment)
-//        write("D=A")
-//        write("@SP")
-//        write("A=M")
-//        write("M=D")
-//        write("@SP")
-//        write("M=M+1")
-//
-//        writeFramePush("LCL")
-//        writeFramePush("ARG")
-//        writeFramePush("THIS")
-//        writeFramePush("THAT")
-//
-//        write("@"+ numArgs)
-//        write("D=A")
-//        write("@5")
-//        write("D=D+A")
-//        write("@SP")
-//        write("D=M-D")
-//        write("@ARG")
-//        write("M=D")
-//
-//        write("@SP")
-//        write("D=M")
-//        write("@LCL")
-//        write("M=D")
-//
-//        writeGoto(funcName)
-//
-//        write("(" + returnAddr + ")") // (return-address)
-//
-//    }
-//
-//    void writeReturn() {
-//        String returnAddr = "\$RET" + returnSubCount
-//        write("@"+ returnAddr)
-//        write("D=A")
-//        write("@\$RETURN\$")
-//        write("0;JMP")
-//        write("("+ returnAddr + ")")
-//        returnSubCount++
-//
-//    }
-    void saveCode(){
-        println("Saving file " + moduleName2 + ".asm")
-        File file = new File(moduleName2 + ".asm")
+    void writeLabel(String label ) {
+        write("(" + label + ")")
+    }
+
+    void writeGoto(String label) {
+        write("@" + label)
+        write("0;JMP")
+    }
+
+    void writeIf(String label) {
+        write("@SP")
+        write("AM=M-1")
+        write("D=M")
+        write("M=0")
+        write("@" + label)
+        write("D;JNE")
+
+    }
+
+    void writeFunction(String funcName, String nLocals) {
+
+        String loopLabel = funcName + "_INIT_LOCALS_LOOP"
+        String loopEndLabel = funcName + "_INIT_LOCALS_END"
+
+        this.funcName = funcName
+
+        write("(" + funcName + ")" + "// initialize local variables")
+        write("@"+ nLocals)
+        write("D=A")
+        write("@R13")
+        write("M=D")
+        write("(" + loopLabel + ")")
+        write("@" + loopEndLabel)
+        write("D;JEQ")
+        write("@0")
+        write("D=A")
+        write("@SP")
+        write("A=M")
+        write("M=D")
+        write("@SP")
+        write("M=M+1")
+        write("@R13")
+        write("MD=M-1")
+        write("@" + loopLabel)
+        write("0;JMP")
+        write("(" + loopEndLabel + ")")
+
+    }
+
+    void writeFramePush(String value) {
+        write("@" + value)
+        write("D=M")
+        write("@SP")
+        write("A=M")
+        write("M=D")
+        write("@SP")
+        write("M=M+1")
+    }
+
+    void writeCall(String funcName, String numArgs) {
+
+        String comment = "// call " + funcName +" "+ numArgs
+
+        String returnAddr = funcName + "_RETURN_"+ callCount
+        callCount++
+
+        write("@"+ returnAddr +" "+ comment)
+        write("D=A")
+        write("@SP")
+        write("A=M")
+        write("M=D")
+        write("@SP")
+        write("M=M+1")
+
+        writeFramePush("LCL")
+        writeFramePush("ARG")
+        writeFramePush("THIS")
+        writeFramePush("THAT")
+
+        write("@"+ numArgs)
+        write("D=A")
+        write("@5")
+        write("D=D+A")
+        write("@SP")
+        write("D=M-D")
+        write("@ARG")
+        write("M=D")
+
+        write("@SP")
+        write("D=M")
+        write("@LCL")
+        write("M=D")
+
+        writeGoto(funcName)
+
+        write("(" + returnAddr + ")")
+
+    }
+
+    void writeReturn() {
+        write("@LCL") // FRAME = LCL
+        write("D=M")
+
+        write("@R13") // R13 -> FRAME
+        write("M=D")
+
+        write("@5") // RET = *(FRAME-5)
+        write("A=D-A")
+        write("D=M")
+        write("@R14") // R14 -> RET
+        write("M=D")
+
+        write("@SP") // *ARG = pop()
+        write("AM=M-1")
+        write("D=M")
+        write("@ARG")
+        write("A=M")
+        write("M=D")
+
+        write("D=A") // SP = ARG+1
+        write("@SP")
+        write("M=D+1")
+
+        write("@R13") // THAT = *(FRAME-1)
+        write("AM=M-1")
+        write("D=M")
+        write("@THAT")
+        write("M=D")
+
+        write("@R13") // THIS = *(FRAME-2)
+        write("AM=M-1")
+        write("D=M")
+        write("@THIS")
+        write("M=D")
+
+        write("@R13") // ARG = *(FRAME-3)
+        write("AM=M-1")
+        write("D=M")
+        write("@ARG")
+        write("M=D")
+
+        write("@R13") // LCL = *(FRAME-4)
+        write("AM=M-1")
+        write("D=M")
+        write("@LCL")
+        write("M=D")
+
+        write("@R14") // goto RET
+        write("A=M")
+        write("0;JMP")
+    }
+
+    void saveCode(String name){
+        println("Saving file " + name + ".asm")
+        File file = new File(name + ".asm")
         file.write(code)
     }
 

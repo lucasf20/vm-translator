@@ -1,6 +1,7 @@
 class Translator {
-    static wrt = []
     static p = []
+    static fileName = []
+    static outputFileName = ""
 
     static void main(String[] args){
         def dh = new File(args[0])
@@ -9,7 +10,7 @@ class Translator {
             dh.eachFile {
                 if (it.toString().endsWith(".vm")) {
                     vmfiles.addAll(new String(it.getBytes()))
-                    wrt.add( new CodeWriter(it.toString()))
+                    fileName.add(it.toString())
                 }
             }
             for (def s : vmfiles) {
@@ -17,30 +18,47 @@ class Translator {
             }
         }catch (Exception e){
             p.add(new Parser(new String(dh.getBytes())))
-            wrt.add(new CodeWriter(dh.toString()))
+            fileName.add(dh.toString())
         }
-
+        resolveOutputFile(args[0])
         getComands()
+    }
+
+    static void resolveOutputFile(String path){
+        String[] aux = path.split("/")
+        if(path.endsWith(".vm")){
+            String optPath = "/"
+            for(int i = 0; i < aux.length -1; i++){
+                optPath += aux[i] + "/"
+            }
+            optPath += aux[aux.length - 2]
+            outputFileName = optPath
+        }else{
+            outputFileName = path + "/" +aux[aux.length - 1]
+        }
     }
 
     static void getComands(){
         int i = 0
+        CodeWriter write = new CodeWriter()
+        if(p.size() > 1){
+            write.writeInit()
+        }
         for(parser in p) {
-            CodeWriter write = wrt[i]
+            write.setFileName(fileName[i])
             while (parser.hasMoreComands()) {
-//                write.writeInit()
                 switch (parser.token) {
-//                    case "return":
-//                        write.writeReturn()
-//                        break
-//                    case "label":
-//                        parser.advance()
-//                        write.writeLabel(parser.token)
-//                        break
-//                    case "if-goto":
-//                        parser.advance()
-//                        write.writeIf(parser.token)
-//                        break
+                    case "return":
+                        write.writeReturn()
+                        break
+                    case "label":
+                        parser.advance()
+                        write.writeLabel(parser.token)
+                        break
+                    case "if-goto":
+                        parser.advance()
+                        write.writeIf(parser.token)
+                        break
                     case "push":
                         parser.advance()
                         String segment = parser.token
@@ -53,22 +71,22 @@ class Translator {
                         parser.advance()
                         write.writePop(segment,parser.token)
                         break
-//                    case "function":
-//                        parser.advance()
-//                        String name = parser.token
-//                        parser.advance()
-//                        write.writeFunction(name,parser.token)
-//                        break
-//                    case "call":
-//                        parser.advance()
-//                        String name = parser.token
-//                        parser.advance()
-//                        write.writeCall(name,parser.token)
-//                        break
-//                    case "goto":
-//                        parser.advance()
-//                        write.writeGoto(parser.token)
-//                        break
+                    case "function":
+                        parser.advance()
+                        String name = parser.token
+                        parser.advance()
+                        write.writeFunction(name,parser.token)
+                        break
+                    case "call":
+                        parser.advance()
+                        String name = parser.token
+                        parser.advance()
+                        write.writeCall(name,parser.token)
+                        break
+                    case "goto":
+                        parser.advance()
+                        write.writeGoto(parser.token)
+                        break
                     case "add":
                         write.writeArithmetic(parser.token)
                         break
@@ -99,8 +117,8 @@ class Translator {
                 }
                 parser.advance()
             }
-            write.saveCode()
             i++
         }
+        write.saveCode(outputFileName)
     }
 }
